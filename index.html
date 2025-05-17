@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Divine Douglas - Frontend Developer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6366F1;
+            --secondary-color: #1E293B;
+            --accent-color: #F59E0B;
+            --dark-color: #0F172A;
+            --light-color: #F8FAFC;
+            --gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-size: 15px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        h1 { font-size: clamp(1.5rem, 6vw, 3rem); }
+        h2 { font-size: clamp(1.25rem, 5vw, 2rem); }
+        h3 { font-size: clamp(1.1rem, 4vw, 1.5rem); }
+        p { font-size: clamp(0.9rem, 3.5vw, 1rem); }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1rem;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .portfolio-brand {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 200;
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            background: linear-gradient(to right, #fff 20%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.7rem 1.2rem;
+            border-radius: 8px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white !important;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 1rem 2rem;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title{
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff 20%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .name {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff 20%, var(--accent-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title{
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: 2px solid transparent;
+            font-size: 0.85rem;
+            min-width: 120px;
+            min-height: 40px;
+        }
+
+        .cta-primary {
+            background: var(--light-color);
+            color: var(--dark-color);
+            box-shadow: var(--shadow);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            border-color: var(--light-color);
+            color: var(--light-color);
+        }
+
+        /* Profile Image */
+        .profile-img {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .profile-img img {
+            width: clamp(220px, 30vw, 320px);
+            height: clamp(220px, 30vw, 320px);
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            transform: perspective(1000px) rotateY(10deg) translateZ(30px);
+            filter: grayscale(0.1) contrast(1.1);
+            margin-top: 1rem;
+        }
+
+        .profile-img img:hover {
+            transform: perspective(1000px) rotateY(0deg) translateZ(50px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            filter: grayscale(0) contrast(1.2);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 3rem 1rem;
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+        }
+
+        /* Skills Section */
+        .skills-section {
+            padding: 3rem 1rem;
+            background: var(--secondary-color);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 1.25rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-card {
+            background: var(--dark-color);
+            padding: 1.25rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .skill-card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            padding: 3rem 1rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 1.25rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--secondary-color);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .project-image {
+            height: clamp(180px, 40vw, 220px);
+            aspect-ratio: 16/9;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .project-content {
+            padding: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 1rem;
+            background: var(--gradient);
+            text-align: center;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: clamp(0.5rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: var(--transition);
+            background: var(--light-color);
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            min-width: 160px;
+            text-align: center;
+        }
+
+        .contact-link:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+        }
+
+        /* Media Queries */
+        @media (min-width: 768px) {
+            body { font-size: 16px; }
+            section { padding: 4rem 2rem; }
+            
+            .hero-content {
+                grid-template-columns: 1fr 1fr;
+                text-align: left;
+                gap: 4rem;
+            }
+            
+            .cta-buttons {
+                justify-content: flex-start;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+            }
+            
+            .nav-links { gap: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 4rem;
+                right: 0.5rem;
+                background: var(--dark-color);
+                flex-direction: column;
+                padding: 0.5rem;
+                border-radius: 8px;
+                box-shadow: var(--shadow);
+                z-index: 1000;
+                border: 1px solid var(--glass);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+
+            .profile-img img {
+                width: clamp(180px, 50vw, 220px);
+                height: clamp(180px, 50vw, 220px);
+                transform: perspective(600px) rotateY(5deg) translateZ(20px);
+                margin-top: 2rem;
+            }
+            
+            .hero-content {
+                gap: 3rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-links {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .contact-link {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .profile-img img {
+                transform: none;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body { font-size: 14px; }
+            .portfolio-brand { font-size: 0.9rem; }
+            .name { font-size: 1.75rem; }
+            .title { font-size: 0.95rem; }
+            .nav-link { padding: 0.5rem; }
+            .cta-buttons { gap: 0.5rem; }
+        }
+
+        html {
+            scroll-padding-top: 80px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <a href="#" class="portfolio-brand">My Portfolio</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a class="nav-link" href="#about">About</a></li>
+            <li><a class="nav-link" href="#skills">Skills</a></li>
+            <li><a class="nav-link" href="#projects">Projects</a></li>
+            <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="name">Divine Douglas</h1>
+                <p class="title">Web development.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="cta-btn cta-primary">
+                        <i class="fas fa-code"></i> View Work
+                    </a>
+                    <a href="resume.pdf" class="cta-btn cta-secondary" target="_blank">
+                        <i class="fas fa-file-alt"></i> View Resume
+                    </a>
+                </div>
+            </div>
+            <div class="profile-img">
+                <img src="images/profile.jpeg" alt="Divine Douglas">
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2 class="section-title">About Me</h2>
+                <p>Passionate frontend developer with expertise in creating modern web applications. I specialize in React and TypeScript development, focusing on building responsive, user-friendly interfaces with clean and maintainable code.</p>
+                <p>With 1+ years of professional experience, I've made several excellence  project, which make me standout among my peers. My approach combines technical excellence with creative problem-solving to deliver exceptional digital experiences.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <svg class="skill-icon" viewBox="0 0 24 24">
+                        <path fill="#F59E0B" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <h3>Education</h3>
+                    <p>Certified in Web development</p>
+                    <p>Udemy</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
+        <h2 class="section-title">Technical Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24">
+                    <path fill="#F59E0B" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <h3>Frontend Development</h3>
+                <p>React, TypeScript, Next.js, GraphQL</p>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24">
+                    <path fill="#F59E0B" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <h3>UI/UX Design</h3>
+                <p>Figma, Adobe XD, User Testing</p>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" viewBox="0 0 24 24">
+                    <path fill="#F59E0B" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                </svg>
+                <h3>Backend Development</h3>
+                <p>node.js, express.js, REST api</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section" id="projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('images/messi.jpeg')"></div>
+                <div class="project-content">
+                    <h3>Messi Tribute</h3>
+                    <p>Responsive landing page for football legend Lionel Messi</p>
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://deyon-01.github.io/messi.index.html/" class="cta-btn cta-primary">Demo</a>
+                        <a href="https://github.com/DEYON-01/messi.index.html.git" class="cta-btn cta-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('images/nike.jpeg')"></div>
+                <div class="project-content">
+                    <h3>Nike Landing Page</h3>
+                    <p>Modern e-commerce interface for Nike products</p>
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://deyon-01.github.io/nike.index.html/" class="cta-btn cta-primary">Demo</a>
+                        <a href="https://github.com/DEYON-01/nike.index.html.git" class="cta-btn cta-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image" style="background-image: url('images/hair.jpeg')"></div>
+                <div class="project-content">
+                    <h3>Hair Salon</h3>
+                    <p>Beauty salon booking and service platform</p>
+                    <div class="cta-buttons" style="margin-top: 1rem;">
+                        <a href="https://deyon-01.github.io/ukeinc4.index.html/" class="cta-btn cta-primary">Demo</a>
+                        <a href="https://github.com/DEYON-01/ukeinc4.index.html.git" class="cta-btn cta-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <p>Did you like my profolio and projects. contact me on the link below.</p>
+        <div class="contact-links">
+            <a href="https://www.linkedin.com/in/divine-douglas
+            -3b93b2365?utm_source=share&utm_campaign
+            =share_via&utm_content=profile&utm_medium=android_app" class="contact-link" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+                LinkedIn
+            </a>
+            <a href="https://wa.me/+2349068980793" class="contact-link" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Divine Douglas. All rights reserved</p>
+        <p>Built with ❤️ using HTML, CSS & JavaScript</p>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinks.classList.toggle('show');
+            menuToggle.style.transform = navLinks.classList.contains('show') 
+                ? 'rotate(90deg)' 
+                : 'rotate(0deg)';
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                navLinks.classList.remove('show');
+                menuToggle.style.transform = 'rotate(0deg)';
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.skill-card, .project-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
